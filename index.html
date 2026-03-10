@@ -643,6 +643,9 @@ function App() {
   const [fuelEfficiency, setFuelEfficiency] = useState(vehicle === 0 ? 8 : vehicle === 1 ? 6 : vehicle === 2 ? 4 : 3);
   const [includeFuel, setIncludeFuel] = useState(false);
 
+  // 掛け率
+  const [kakerate, setKakerate] = useState(10);
+
   // 計算
   const calc = useMemo(() => {
     let baseRate = 0;
@@ -1388,7 +1391,47 @@ function App() {
       fontWeight: 600,
       color: "#b45309"
     }
-  }, "\xA5", fmt(calc.grandTotal)))), /*#__PURE__*/React.createElement("div", {
+  }, "\xA5", fmt(calc.grandTotal))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "12px 16px",
+      background: kakerate < 10 ? "#f0f9ff" : "#f9fafb",
+      borderTop: "1px solid #e2e5ea"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 8
+    }
+  }, /*#__PURE__*/React.createElement("select", {
+    value: kakerate,
+    onChange: e => setKakerate(Number(e.target.value)),
+    style: {
+      padding: "4px 8px",
+      borderRadius: 5,
+      border: "1px solid #e2e5ea",
+      background: "#ffffff",
+      color: "#1f2937",
+      fontFamily: "'JetBrains Mono', monospace",
+      fontSize: 13,
+      fontWeight: 600,
+      outline: "none",
+      cursor: "pointer"
+    }
+  }, [10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map(k => /*#__PURE__*/React.createElement("option", {
+    key: k,
+    value: k
+  }, k, "\u639B\u3051\uFF08", k * 10, "%\uFF09")))), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: "'JetBrains Mono', monospace",
+      fontSize: 18,
+      fontWeight: 700,
+      color: kakerate < 10 ? "#0369a1" : "#6b7280"
+    }
+  }, "\xA5", fmt(Math.round(calc.grandTotal * kakerate / 10))))), /*#__PURE__*/React.createElement("div", {
     style: {
       background: "#ffffff",
       borderRadius: 10,
